@@ -25,9 +25,15 @@
                                     {{$product->price}}
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-info btn-sm">Edit</a>
+                                    <a href="{{route('products.edit',$product->id)}}" class="btn btn-info btn-sm">Edit</a>
                                 </td>
-                                <td></td>
+                                <td>
+                                    <form action="{{route('products.destroy',$product->id)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

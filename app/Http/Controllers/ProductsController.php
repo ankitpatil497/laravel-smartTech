@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\products\CreateProductsRequest;
+use App\Http\Requests\products\EditProductsRequest;
 use App\Products;
+use File;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -71,9 +73,9 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Products $product)
     {
-        //
+        return view('products.edit')->with('products',$product);
     }
 
     /**
@@ -83,9 +85,24 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditProductsRequest $request,Products $product)
     {
-        //
+        $data=$request->all();
+        $product->name=$request->name;
+        $product->price=$request->price;
+        $product->discription=$request->discription;
+        
+        if($request->hasFile('image')){
+            $image=$request->image->store('products');
+
+            $product->deleteimage();
+            $data['image']=$image;
+        }
+        $product->save();
+
+        session()->flash('edit','Edit Products Successfully');
+
+        return redirect(route('products.index'));
     }
 
     /**
@@ -94,8 +111,16 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($p)
     {
-        //
+        
+        $product=Products::find($p);
+        if(file_exists($product->image)){
+            unlink($product->image);
+        }
+        $product->delete();
+       
+        session()->flash('delete','Products Delete Successfully');
+        return redirect()->back();
     }
 }
