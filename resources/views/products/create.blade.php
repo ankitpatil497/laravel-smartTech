@@ -14,18 +14,22 @@
                             <label for="name" id="name">Name</label>
                             <input type="text" name="name" id="name" class="form-control" value="{{old('name')}}">
                         </div>
+
                         <div class="form-group">
                             <label for="price" id="price">Price</label>
                             <input type="number" name="price" id="price" class="form-control" value="{{old('price')}}">
                         </div>
+
                         <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" name="image" id="image" class="form-control">
                         </div>
+
                         <div class="form-group">
                             <label for="discription">Discription</label>
                             <textarea name="discription" id="discription" class="form-control" cols="5" rows="5">{{old('discription')}}</textarea>
                         </div>
+                        
                         <button type="submit" class="btn btn-success">Save Products</button>
                    </form>
                 </div>

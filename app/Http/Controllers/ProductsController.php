@@ -88,6 +88,7 @@ class ProductsController extends Controller
     public function update(EditProductsRequest $request,Products $product)
     {
         $data=$request->all();
+        
         $product->name=$request->name;
         $product->price=$request->price;
         $product->discription=$request->discription;
